@@ -20,12 +20,14 @@ Users can search doctors by:
 
 ---
 
-# Technologies Used
+# Technologies & Tools Used
 
 - PHP
 - MySQL
 - HTML
 - CSS
+- Figma
+- Locofy
 - phpMyAdmin
 - InfinityFree Hosting
 
