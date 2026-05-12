@@ -31,15 +31,5 @@ Users can search doctors by:
 
 ---
 
-# Project Structure
-
-```plaintext
-doctor-search/
-│
-├── index.php
-├── style.css
-├── doctor_db.sql
-└── README.md
-
 <img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/faebc64d-24d1-4d6a-b760-d97e8aff27dd" />
 
