@@ -24,8 +24,8 @@ Users can search doctors by:
 
 - PHP
 - MySQL
-- HTML5
-- CSS3
+- HTML
+- CSS
 - phpMyAdmin
 - InfinityFree Hosting
 
