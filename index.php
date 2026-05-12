@@ -1,6 +1,13 @@
 <?php
-$conn = new mysqli("root", "epiz_xxxxx", "", "doctor_db");
+// DATABASE CONNECTION
+$conn = new mysqli(
+    "sql205.infinityfree.com",
+    "if0_41613429",
+    "qSd06FyOOep3",
+    "if0_41613429_doctorsearch"
+);
 
+// CHECK CONNECTION
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -13,9 +20,8 @@ if ($conn->connect_error) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Doctor Search</title>
 
-<style>
-/* KEEP YOUR SAME CSS */
-</style>
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -56,42 +62,44 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
 }
 
-$sql = "SELECT * FROM doctors 
-        WHERE name LIKE ? OR specialization LIKE ? OR location LIKE ?";
+// PREPARED STATEMENT (SECURE)
+$stmt = $conn->prepare(
+    "SELECT * FROM doctors 
+     WHERE name LIKE ? OR specialization LIKE ? OR location LIKE ?"
+);
 
-$stmt = $conn->prepare($sql);
-
-if ($stmt) {
-    $searchParam = "%$search%";
-    $stmt->bind_param("sss", $searchParam, $searchParam, $searchParam);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo '
-            <div class="doctor-card">
-                <div class="doctor-info">
-                    <h2 class="doctor-name">'.htmlspecialchars($row['name']).'</h2>
-                    <div class="doctor-details">
-                        <p class="doctor-specialization">'.htmlspecialchars($row['specialization']).'</p>
-                        <p class="doctor-location">'.htmlspecialchars($row['location']).'</p>
-                    </div>
-                    <button class="view-profile-btn">View Profile</button>
-                </div>
-            </div>
-            ';
-        }
-    } else {
-        echo '<p class="no-results show">No doctors found</p>';
-    }
-
-    $stmt->close();
-} else {
-    echo "Query preparation failed: " . $conn->error;
+// CHECK PREPARE
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
 }
 
+$searchParam = "%$search%";
+$stmt->bind_param("sss", $searchParam, $searchParam, $searchParam);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// DISPLAY RESULTS
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo '
+        <div class="doctor-card">
+            <div class="doctor-info">
+                <h2 class="doctor-name">'.htmlspecialchars($row['name']).'</h2>
+                <div class="doctor-details">
+                    <p class="doctor-specialization">'.htmlspecialchars($row['specialization']).'</p>
+                    <p class="doctor-location">'.htmlspecialchars($row['location']).'</p>
+                </div>
+                <button class="view-profile-btn">View Profile</button>
+            </div>
+        </div>
+        ';
+    }
+} else {
+    echo '<p class="no-results show">No doctors found</p>';
+}
+
+// CLOSE STATEMENT
+$stmt->close();
 $conn->close();
 ?>
 
@@ -101,3 +109,4 @@ $conn->close();
 
 </body>
 </html>
+
