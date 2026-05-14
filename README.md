@@ -35,3 +35,4 @@ Users can search doctors by:
 
 <img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/faebc64d-24d1-4d6a-b760-d97e8aff27dd" />
 
+<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/e64f9376-0882-4928-9881-dad94b5e1057" />
